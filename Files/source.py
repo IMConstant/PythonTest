@@ -25,6 +25,8 @@ def ReadAllFiles(way):
 			if result != 'NONE':
 				spis.append(result)
 
+			print(way + '/' + file, '---->', result)
+
 		elif file.endswith(mask):
 			spis.append(CheckFile(way + '/' + file, '+' if str(way[-1:-4:-1]) == 'dda' else '*'))
 
