@@ -1,4 +1,5 @@
 import os as file_sys
+import sys
 
 mask = '.txt'
 start = file_sys.getcwd()
@@ -25,7 +26,8 @@ def ReadAllFiles(way):
 			if result != 'NONE':
 				spis.append(result)
 
-			print(way + '/' + file, '---->', result)
+			if print_flag:
+				print(way + '/' + file, '---->', result)
 
 		elif file.endswith(mask):
 			spis.append(CheckFile(way + '/' + file, '+' if str(way[-1:-4:-1]) == 'dda' else '*'))
@@ -44,5 +46,20 @@ def ReadAllFiles(way):
 	return ret
 
 
-for i in range(20):
-	print(ReadAllFiles(start + '/test' + str(i)))
+print_flag = 1
+
+if len(sys.argv) == 2 and (sys.argv[1] == '-a' or sys.argv[1] == '--answer'):
+	print_flag = 0
+elif len(sys.argv) == 2:
+	print('ERROR!')
+	exit()
+
+files = [file for file in file_sys.listdir()]
+files.sort()
+
+for file in files:
+	if file_sys.path.isdir(start + '/' + file):
+		if print_flag:
+			print(file, '--->')
+
+		print(ReadAllFiles(start + '/' +  file))
