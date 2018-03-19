@@ -7,7 +7,7 @@ start = file_sys.getcwd()
 dirs = ['add', 'mul']
 num = 0
 
-def CheckAllDirs(deway):
+def CreateNext(deway):
 	global num
 	global rndflag
 	global max_num
@@ -18,7 +18,7 @@ def CheckAllDirs(deway):
 
 			if rnddf <= rndflag:
 				CreateDir(deway + '/' + file)
-				CheckAllDirs(deway + '/' + file)
+				CreateNext(deway + '/' + file)
 
 			for j in range(1, random.randint(2, 10)):
 				fout = open(deway + '/' + file + '/file' + str(num) + '.txt', 'w')
@@ -31,31 +31,37 @@ def CheckAllDirs(deway):
 				num += 1
 
 
-def CreateDir(deway):
+def CreateDir(deway, flg = False):
 	global dirs
 
-	file_sys.mkdir(deway + '/' + str(random.choice(dirs)))
+	if flg == False:
+		if random.randint(1, 2) == 2:
+			file_sys.mkdir(deway + '/add')
+			file_sys.mkdir(deway + '/mul')
 
+			return
+
+	file_sys.mkdir(deway + '/' + str(random.choice(dirs)))
 
 random.seed()
 
 max_num = 32
-rndflag = 9
+rndflag = 6
 
 for file in file_sys.listdir():
 	if file_sys.path.isdir(file):
 		file_sys.system('rm -rf ' + file)
 
 if len(sys.argv) == 2 and (sys.argv[1] == '-lt' or sys.argv[1] == '--lowtests'):
-	rndflag = 7
+	rndflag = 4
 	max_num = 8
 elif len(sys.argv) == 2:
 	print('ERROR!')
 	exit()
 
-for i in range(20):
-	way = start + '/test' + str(i)
+for i in range(1, 21):
+	way = start + '/test' + (('0' + str(i)) if i < 10 else str(i))
 	file_sys.mkdir(way)
-	CreateDir(way)
-	CheckAllDirs(way)
+	CreateDir(way, True)
+	CreateNext(way)
 
