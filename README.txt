@@ -3,16 +3,18 @@
 
 Для запуска решения необходимо загрузить файлы .py в одну директорию и первым делом запустить генератор тестов(TestCreator.py). После запуска в текущей директории будут созданы 20 директорий с тестами(test0, test1, ... , test19). Делее просто запускается файл source.py. После каждого запуска TestCreator.py тесты пересоздаются!!
 
-Есть возможность запуска программы с некоторыми флагами: TestCreator.py -lt or --lowtests - генерация маленьких тестов
+Есть возможность запуска программы с некоторыми флагами:
+TestCreator.py -lt or --lowtests - генерация маленьких тестов
+TestCreator.py -a or --amount [num] - позволяет указать количество создаваемых тестов(Если num равно 0, то все тесты удаляются)
 
 source.py -a or --answer - Чистый вывод числа верхней директории. При запуске программы без данных флагов для каждого теста буду выведены путь каждой поддиректории и ее число
 Ответы на тесты могут быть очень большими числами!
 
 Примеры работы программы (на одном тесте!):
-koko@koko-HP-Notebook:~/PythonTest/Files$ python TestCreator.py -lt
-koko@koko-HP-Notebook:~/PythonTest/Files$ python source.py -a
+koko@koko-HP-Notebook:~/PythonTest/Files$ python3 TestCreator.py -lt
+koko@koko-HP-Notebook:~/PythonTest/Files$ python3 source.py -a
 2220460334504927150980055419
-koko@koko-HP-Notebook:~/PythonTest/Files$ python source.py
+koko@koko-HP-Notebook:~/PythonTest/Files$ python3 source.py
 test01 --->
 /home/koko/PythonTest/Files/test01/add/add/add/add/add ----> 14
 /home/koko/PythonTest/Files/test01/add/add/add/add ----> 52
@@ -27,10 +29,10 @@ test01 --->
 
 
 
-koko@koko-HP-Notebook:~/PythonTest/Files$ python TestCreator.py --lowtests
-koko@koko-HP-Notebook:~/PythonTest/Files$ python source.py --answer
+koko@koko-HP-Notebook:~/PythonTest/Files$ python3 TestCreator.py --lowtests
+koko@koko-HP-Notebook:~/PythonTest/Files$ python3 source.py --answer
 8091103227903598131318620160000000
-koko@koko-HP-Notebook:~/PythonTest/Files$ python source.py
+koko@koko-HP-Notebook:~/PythonTest/Files$ python3 source.py
 test01 --->
 /home/koko/PythonTest/Files/test01/mul/add ----> 57
 /home/koko/PythonTest/Files/test01/mul/mul ----> 83528953469337600000
@@ -39,10 +41,10 @@ test01 --->
 
 
 
-koko@koko-HP-Notebook:~/PythonTest/Files$ python TestCreator.py
-koko@koko-HP-Notebook:~/PythonTest/Files$ python source.py -a
+koko@koko-HP-Notebook:~/PythonTest/Files$ python3 TestCreator.py
+koko@koko-HP-Notebook:~/PythonTest/Files$ python3 source.py -a
 43199869513002396978202162553646794606250878240772258028172185393081885601677801982838822967743901350599307126722527171275678854086656000000000000
-koko@koko-HP-Notebook:~/PythonTest/Files$ python source.py
+koko@koko-HP-Notebook:~/PythonTest/Files$ python3 source.py
 test01 --->
 /home/koko/PythonTest/Files/test01/mul/add/add ----> 204
 /home/koko/PythonTest/Files/test01/mul/add/mul/add ----> 715

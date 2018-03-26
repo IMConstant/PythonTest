@@ -1,12 +1,14 @@
 #/usr/bin/python3
 
-import os as file_sys
+import os
 import sys
+import argparse
 
 mask = '.txt'
-start = file_sys.getcwd()
+start = os.getcwd()
+flag = 1
 
-def CheckFile(file, op):
+def ReadFile(file, op):
 	count = (0 if op == '+' else 1)
 
 	with open(file, 'r') as fin:
@@ -18,50 +20,67 @@ def CheckFile(file, op):
 
 	return count
 
-def ReadAllFiles(way):
-	spis = []
-
-	for file in file_sys.listdir(way):
-		if file_sys.path.isdir(way + '/' + file):
-			result = ReadAllFiles(way + '/' + file)
-
-			if result != 'NONE':
-				spis.append(result)
-
-			if print_flag:
-				print(way + '/' + file, '---->', result)
-
-		elif file.endswith(mask):
-			spis.append(CheckFile(way + '/' + file, '+' if str(way[-1:-4:-1]) == 'dda' else '*'))
-
-	ret = (0 if str(way[-1:-4:-1]) == 'dda' else 1)
-
-	if (len(spis) == 0):
-		return 'NONE'
+def CalcRes(deway, spis):
+	ret = (0 if str(deway[-1:-4:-1]) == 'dda' else 1)
 
 	for i in spis:
-		if str(way[-1:-4:-1]) == 'dda':
-			ret += i
-		else:
-			ret *= i
+                if str(deway[-1:-4:-1]) == 'dda':
+                        ret += i
+                else:
+                        ret *= i
 
 	return ret
 
+def isDir(deway, spis):
+	result = ReadAllFiles(deway)
 
-print_flag = 1
+	if result != 'NONE':
+        	spis.append(result)
 
-if len(sys.argv) == 2 and (sys.argv[1] == '-a' or sys.argv[1] == '--answer'):
-	print_flag = 0
-elif len(sys.argv) == 2:
-	print('ERROR!')
-	exit()
+	if flag:
+		print(deway, '---->', result)
 
-files = [file for file in file_sys.listdir()]
-files.sort()
+def isFile(way, file, spis):
+	if file.endswith(mask):
+		spis.append(ReadFile(way + '/' + file, '+' if str(way[-1:-4:-1]) == 'dda' else '*'))
 
-for file in files:
-	if file_sys.path.isdir(start + '/' + file):
-		if print_flag:
-			print(file, '--->')
+def ReadAllFiles(way):
+	spis = []
 
-		print(ReadAllFiles(start + '/' +  file))
+	for file in os.listdir(way):
+		if os.path.isdir(way + '/' + file):
+			isDir(way + '/' + file, spis)
+		else:
+			isFile(way, file, spis)
+
+	if (len(spis) == 0):
+		return 'NONE'
+	else:
+		return CalcRes(way, spis)
+
+def CheckProcIn():
+	parser = argparse.ArgumentParser()
+
+	parser.add_argument('-a', '--answer', action = 'store_true', help = 'clear answer')
+
+	if parser.parse_args().answer:
+		return 0
+	else:
+		return 1
+
+def FindStartDir():
+	files = [file for file in os.listdir()]
+	files.sort()
+
+	for file in files:
+		if os.path.isdir(start + '/' + file):
+			if flag:
+				print(file, '--->')
+
+			print(ReadAllFiles(start + '/' + file))
+
+
+
+
+flag = CheckProcIn()
+FindStartDir()
