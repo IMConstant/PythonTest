@@ -2,7 +2,7 @@
 
 import os
 import random
-import sys
+import shutil
 import argparse
 
 start = os.getcwd()
@@ -11,7 +11,7 @@ dirs = ['add', 'mul']
 num = 0
 
 def Creator(deway):
-	rnddf = random.randint(0, 15)
+	rnddf = random.randint(0, 10)
 
 	if rnddf <= rndflag:
 		CreateDir(deway)
@@ -48,7 +48,7 @@ def CreateDir(deway, flg = False):
 
 	os.mkdir(deway + '/' + str(random.choice(dirs)))
 
-def CreateStartDirs(amount):
+def CreateStartDirs():
 	for i in range(1, amount + 1):
         	way = start + '/test' + (('0' + str(i)) if i < 10 else str(i))
         	os.mkdir(way)
@@ -63,7 +63,7 @@ def CheckProcIn():
 	args = []
 
 	if parser.parse_args().lowtests:
-		args = [4, 8]
+		args = [4, 5]
 	else:
 		args = [32, 6]
 
@@ -77,10 +77,10 @@ def CheckProcIn():
 def DeleteTests():
 	for file in os.listdir():
        		if os.path.isdir(file) and file[:4] == 'test':
-                	os.system('rm -rf ' + file)
+                	shutil.rmtree(file, ignore_errors = True)
 
 random.seed()
 
 DeleteTests()
 max_num, rndflag, amount = CheckProcIn()
-CreateStartDirs(amount)
+CreateStartDirs()
