@@ -23,7 +23,7 @@ def CreateFiles(deway):
 	global num #txt files count
 
 	for j in range(1, random.randint(2, 10)):
-		fout = open(deway + '/file' + str(num) + '.txt', 'w')
+		fout = open(os.path.join(deway, 'file' + str(num) + '.txt'), 'w')
 
 		for i in range(5):
 			fout.write(str(random.randint(1, max_num)))
@@ -35,22 +35,22 @@ def CreateFiles(deway):
 
 def CreateNext(deway):
 	for file in os.listdir(deway):
-		if os.path.isdir(deway + '/' + file):
-			Creator(deway + '/' + file)
+		if os.path.isdir(os.path.join(deway, file)):
+			Creator(os.path.join(deway, file))
 
-def CreateDir(deway, flg = False):
-	if flg == False:
+def CreateDir(deway, flg = 0):
+	if flg == 0:
 		if random.randint(1, 2) == 2:
-			os.mkdir(deway + '/add')
-			os.mkdir(deway + '/mul')
+			os.mkdir(os.path.join(deway, 'add'))
+			os.mkdir(os.path.join(deway, 'mul'))
 
 			return
 
-	os.mkdir(deway + '/' + str(random.choice(dirs)))
+	os.mkdir(os.path.join(deway, str(random.choice(dirs))))
 
 def CreateStartDirs():
 	for i in range(1, amount + 1):
-        	way = start + '/test' + (('0' + str(i)) if i < 10 else str(i))
+        	way = os.path.join(start, 'test' + (('0' + str(i)) if i < 10 else str(i)))
         	os.mkdir(way)
         	CreateDir(way, True)
         	CreateNext(way)
