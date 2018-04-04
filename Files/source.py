@@ -8,10 +8,10 @@ mask = '.txt'
 start = os.getcwd()
 flag = 1
 
-def ReadFile(file, op):
+def ReadFile(file_way, op):
 	count = (0 if op == '+' else 1)
 
-	with open(file, 'r') as fin:
+	with open(file_way, 'r') as fin:
 		for i in fin.readline().strip().split():
 			if op == '+':
 				count += int(i)
